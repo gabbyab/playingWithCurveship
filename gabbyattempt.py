@@ -38,7 +38,7 @@ items = [
 
     Thing('@imac in @classroom',
         article='an',
-        called='iMac',
+        called='imac', #LOL MUST BE LOWERCASE LOLOLOLOL...
         sight='the screen of this expensive computer emits a soft light')] # 8:41 PM, check if it works now!
 
 #Lol it blew up... seems to be mad about iMac. Lemme fix. 8:46 PM
