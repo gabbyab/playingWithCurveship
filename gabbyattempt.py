@@ -19,7 +19,7 @@ discourse = {
     'spin':
     {'commanded': '@student', 'focalizer': '@student', 'narratee': '@student'}}
 
-initial_actions = [Sense('look at', '@student', direct='@classroom', modality='sight')] #8:22 PM
+initial_actions = [Sense('examine', '@student', direct='@classroom', modality='sight')] #8:22 PM
 
 items = [
     Actor('@student in @classroom',
@@ -27,7 +27,7 @@ items = [
         called='student',
         gender='female',
         allowed=can.possess_any_item,
-        refuses=[('LEAVE way=(north|out)', when.always,
+        refuses=[('LEAVE way=(northeast|out)', when.always,
                  '[@student/s] [have/v] code to do')]),
 
     Room('@classroom',
@@ -37,16 +37,16 @@ items = [
         sight='a paste-colored classroom with an iMac at a table. There is a closed door to the northeast'),
 
     Thing('@imac in @classroom',
-        article='a',
+        article='an',
         called='iMac',
-        sight='the screen of this expensive computer [emits/v] a soft light')] # 8:41 PM, check if it works now!
+        sight='the screen of this expensive computer emits a soft light')] # 8:41 PM, check if it works now!
 
 #Lol it blew up... seems to be mad about iMac. Lemme fix. 8:46 PM
 #Another error. Keyerror on artist... where...
 #Found it. Retrying. 8:48 PM
 #Hah... that didn't go as planned! Take a look: (8:50 PM)
 
-                                    __________
+#                                    __________
 #                                   / Curveship
 #                                 version 0.5.0.0
 #                        fiction: fiction/gabbyattempt.py
