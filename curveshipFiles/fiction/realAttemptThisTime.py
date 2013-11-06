@@ -40,16 +40,18 @@ class OutsideArea(Room):
     def __init__(self, tag, **keywords):
         if 'shared' not in keywords:
             keywords['shared'] = []
-        keywords['shared'] += ['@sky', '@sunmoon']
+        keywords['shared'] += ['@sky', '@sun', '@moon']
         Room.__init__(self, tag, **keywords)
+
 
 class HeavenlyBody(Thing):
 	'Stars, moon, sun, planets if needed, huzzah.'
 
 	def __init__(self, tag, **keywords):
-        self.alive = False
-        Thing.__init__(self, tag, **keywords)
+		self.alive = False
+		Thing.__init__(self, tag, **keywords)
         #put in something with light
+
 
 class Sun(HeavenlyBody):
 	'The sun, the only instance of... the sun.'
@@ -60,7 +62,9 @@ class Sun(HeavenlyBody):
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
 		else:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
-		return actions
+		actions.append(Modify('look', basis.agent, direct=str(self), feature='glow', new=1.0))
+		return actions + HeavenlyBody.react(self, world, basis)
+
 
 class Moon(HeavenlyBody):
 	'The moon, the only instance of... the moon.'
@@ -71,7 +75,8 @@ class Moon(HeavenlyBody):
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
 		else:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
-		return actions
+		actions.append(Modify('look', basis.agent, direct=str(self), feature='glow', new=1.0))
+		return actions + HeavenlyBody.react(self, world, basis)
 
 
 
@@ -104,15 +109,13 @@ items = [
 		article = 'the',
 		called = "sun",
 		sight = "Hard to look at and ever generous in its light giving warmth, the sun sits far out of reach."
-		glow = 1.0
 		),
 
 	Moon('@moon in @sky',
 		article = 'the',
 		called = 'moon',
 		sight = 'Softly glowing in the darkness of the sky, this pale white orb strolls leisurely across the aerial landscape.',
-		glow = 1.0
-		)
+		),
 
 	SharedThing('@sky',
 		article = 'the',
