@@ -21,7 +21,7 @@ discourse = {
 		'title': "Losing the Game",
 		'headline': "Still confused",
 		'people': [('by', 'Gabby')],
-		'prologue': 'You find yourself coming to out of the darkness.'
+		'prologue': 'You find yourself coming to and out of the darkness.'
 	},
 	'spin': {
 	'commanded': "@player",
@@ -31,6 +31,8 @@ discourse = {
 }
 
 initial_actions = [Sense('look', '@player', direct='@beach', modality='sight')]
+
+currentTime = datetime.datetime.now().minute%10
 
 class OutsideArea(Room):
     'Subclass for all forest/outside Rooms, with sky and sun or moon.'
@@ -55,11 +57,23 @@ class Sun(HeavenlyBody):
 	def react(self, world, basis):
 		actions = []
 		if currentTime < 4:
-			actions.append(Modify('change_appearance', basis.agent, direct=str(self), feature='sight', new="hard to look at and ever generous in its light giving warmth, the sun sits far out of reach"))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
 		else:
-			actions.append(Modify('change_prominence', basis.agent, direct=str(self), ))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
+		return actions
 
-currentTime = datetime.datetime.now().minute%10
+class Moon(HeavenlyBody):
+	'The moon, the only instance of... the moon.'
+
+	def react(self, world, basis):
+		actions = []
+		if currentTime > 4:
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
+		else:
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
+		return actions
+
+
 
 """
 def lookAtSunMoon():
@@ -86,11 +100,19 @@ items = [
 		sight ="A sprawling beach with glittering sand and waves crashing at the shore.",
 		exits = {}),
 
-	SharedThing('@sunmoon',
+	Sun('@sun in @sky',
 		article = 'the',
-		called = lookAtSunMoon(),
-		sight = "a bright luminous object in the sky"
+		called = "sun",
+		sight = "Hard to look at and ever generous in its light giving warmth, the sun sits far out of reach."
+		glow = 1.0
 		),
+
+	Moon('@moon in @sky',
+		article = 'the',
+		called = 'moon',
+		sight = 'Softly glowing in the darkness of the sky, this pale white orb strolls leisurely across the aerial landscape.',
+		glow = 1.0
+		)
 
 	SharedThing('@sky',
 		article = 'the',
