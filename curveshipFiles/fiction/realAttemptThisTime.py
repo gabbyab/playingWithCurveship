@@ -54,17 +54,23 @@ class Sun(HeavenlyBody):
 
 	def react(self, world, basis):
 		actions = []
+		if currentTime < 4:
+			actions.append(Modify('change_appearance', basis.agent, direct=str(self), feature='sight', new="hard to look at and ever generous in its light giving warmth, the sun sits far out of reach"))
+		else:
+			actions.append(Modify('change_prominence', basis.agent, direct=str(self), ))
 
+currentTime = datetime.datetime.now().minute%10
 
+"""
 def lookAtSunMoon():
-	currentTime = datetime.datetime.now().minute%10
+	
 	if currentTime < 4:
 		timeOfDay = "day"
 		sunMoonObj = "sun"
 	else:
 		timeOfDay = "night"
 		sunMoonObj = "moon"
-	return sunMoonObj
+	return sunMoonObj"""
 
 
 items = [
