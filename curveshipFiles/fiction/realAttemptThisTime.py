@@ -40,11 +40,11 @@ class OutsideArea(Room):
     def __init__(self, tag, **keywords):
         if 'shared' not in keywords:
             keywords['shared'] = []
-        keywords['shared'] += ['@sky', '@sun', '@moon']
+        keywords['shared'] += ['@sky', '@moon', '@sun']
         Room.__init__(self, tag, **keywords)
 
 
-class HeavenlyBody(Thing):
+class HeavenlyBody(SharedThing):
 	'Stars, moon, sun, planets if needed, huzzah.'
 
 	def __init__(self, tag, **keywords):
@@ -120,5 +120,7 @@ items = [
 	SharedThing('@sky',
 		article = 'the',
 		called = 'sky',
-		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.')
+		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.'
+		)
+
 ]
