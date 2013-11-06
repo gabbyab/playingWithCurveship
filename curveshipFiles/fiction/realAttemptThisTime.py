@@ -41,6 +41,21 @@ class OutsideArea(Room):
         keywords['shared'] += ['@sky', '@sunmoon']
         Room.__init__(self, tag, **keywords)
 
+class HeavenlyBody(Thing):
+	'Stars, moon, sun, planets if needed, huzzah.'
+
+	def __init__(self, tag, **keywords):
+        self.alive = False
+        Thing.__init__(self, tag, **keywords)
+        #put in something with light
+
+class Sun(HeavenlyBody):
+	'The sun, the only instance of... the sun.'
+
+	def react(self, world, basis):
+		actions = []
+
+
 def lookAtSunMoon():
 	currentTime = datetime.datetime.now().minute%10
 	if currentTime < 4:
