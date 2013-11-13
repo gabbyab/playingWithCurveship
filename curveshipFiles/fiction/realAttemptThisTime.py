@@ -60,8 +60,10 @@ class Sun(HeavenlyBody):
 		actions = []
 		if currentTime < 4:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='mention', new=True))
 		else:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='mention', new=False))
 		actions.append(Modify('look', basis.agent, direct=str(self), feature='glow', new=1.0))
 		return actions + HeavenlyBody.react(self, world, basis)
 
@@ -73,23 +75,12 @@ class Moon(HeavenlyBody):
 		actions = []
 		if currentTime > 4:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=1.0))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='mention', new=True))
 		else:
 			actions.append(Modify('look', basis.agent, direct=str(self), feature='prominence', new=0.0))
+			actions.append(Modify('look', basis.agent, direct=str(self), feature='mention', new=False))
 		actions.append(Modify('look', basis.agent, direct=str(self), feature='glow', new=1.0))
 		return actions + HeavenlyBody.react(self, world, basis)
-
-
-
-"""
-def lookAtSunMoon():
-	
-	if currentTime < 4:
-		timeOfDay = "day"
-		sunMoonObj = "sun"
-	else:
-		timeOfDay = "night"
-		sunMoonObj = "moon"
-	return sunMoonObj"""
 
 
 items = [
@@ -121,9 +112,20 @@ items = [
 		article = 'the',
 		called = 'sky',
 		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.'
-		)
+		),
+
+	Thing('@tree in @beach', 
+		article = 'a', 
+		called= 'tree', 
+		sight = 'A tree that is twice your height with green leaves.')
 
 ]
 
+
+
 for everyNum in range(50):
-	items.append(Thing('@sand' + str(everyNum) + ' in @beach', article = 'some', called = 'sand', sight = 'It is grainy and fine with a pale tan color.', taste = 'It tastes like salt.'))
+	items.append(Thing('@sand' + str(everyNum) + ' in @beach', article = 'some', called = 'sand', sight = 'It is grainy and fine with a pale tan color.', taste = 'that the sand has the same flavor as salt.', mention= False))
+
+
+for everyNum in range(4):
+	items.append(Thing('@log' + str(everyNum) + ' in @tree', article= 'a', called = 'log', sight ='It is a wooden log', mention=False))
