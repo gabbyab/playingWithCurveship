@@ -124,3 +124,6 @@ items = [
 		)
 
 ]
+
+for everyNum in range(50):
+	items.append(Thing('@sand' + str(everyNum) + ' in @beach', article = 'some', called = 'sand', sight = 'It is grainy and fine with a pale tan color.', taste = 'It tastes like salt.'))
