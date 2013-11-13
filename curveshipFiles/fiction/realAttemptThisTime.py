@@ -82,6 +82,21 @@ class Moon(HeavenlyBody):
 		actions.append(Modify('look', basis.agent, direct=str(self), feature='glow', new=1.0))
 		return actions + HeavenlyBody.react(self, world, basis)
 
+class Tree(Thing):
+	treeSmacked = 0
+	def react(self, world, basis):
+		actions = []
+		if basis.verb in ['strike', 'punch', 'hit'] and basis.direct == str(self):
+			self.treeSmacked = self.treeSmacked + 1
+			print self.children
+			if self.treeSmacked < 17 and self.treeSmacked % 4 == 0:
+				actions.append(Modify('open', str(self), direct=str(self), feature='open', new=True))
+				actions.append(Configure('drop','@tree', direct='@log' + str((self.treeSmacked/4)-1), template=['[direct/o] [fall/v] off [agent/s]'], new=('in', '@beach') ))
+				actions.append(Modify('close', str(self), direct=str(self), feature='open', new=False))
+			#FIND A WAY TO MAKE IT SO THE TREE'S GONE AFTER BEING HIT 16 times!
+		return actions + Thing.react(self, world, basis)
+
+
 
 items = [
 	Actor('@player in @beach',
@@ -114,10 +129,16 @@ items = [
 		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.'
 		),
 
-	Thing('@tree in @beach', 
+	Tree('@tree in @beach', 
 		article = 'a', 
 		called= 'tree', 
-		sight = 'A tree that is twice your height with green leaves.')
+		open= False,
+		sight = 'A tree that is twice your height with green leaves.'),
+
+	Room('@dummyroom',
+		called = 'dummyroom',
+		sight = 'throw stuff here',
+		exits = {})
 
 ]
 
@@ -128,4 +149,4 @@ for everyNum in range(50):
 
 
 for everyNum in range(4):
-	items.append(Thing('@log' + str(everyNum) + ' in @tree', article= 'a', called = 'log', sight ='It is a wooden log', mention=False))
+	items.append(Thing('@log' + str(everyNum) + ' in @tree', article= 'a', called = 'log', sight ='It is a wooden log'))

@@ -512,7 +512,7 @@ class Discourse(object):
         'STRIKE ACCESSIBLE':
          ['attack ACCESSIBLE',
           '(break|destroy|engage|fight|hit|kill|murder|shatter|' + 
-          'slaughter|slay|smack|smash) ACCESSIBLE',
+          'slaughter|slay|smack|smash|punch) ACCESSIBLE',
           'strike( down)? ACCESSIBLE',
           'strike ACCESSIBLE down'],
 
