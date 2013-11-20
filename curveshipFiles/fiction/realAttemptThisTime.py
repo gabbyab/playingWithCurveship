@@ -44,6 +44,17 @@ class OutsideArea(Room):
         Room.__init__(self, tag, **keywords)
 
 
+class SharedThingContainer(SharedThing):
+	'Subclass for shared things that hold things.'
+
+    def __init__(self, tag_and_parent, **keywords):
+        check_attributes(tag_and_parent, [], ['allowed', 'parent'], keywords)
+        tag_and_parent = tag_and_parent + ' of @cosmos'
+        keywords['allowed'] = can.have_any_item
+        self.sharedthing = True
+        Thing.__init__(self, tag_and_parent, **keywords)
+
+
 class HeavenlyBody(SharedThing):
 	'Stars, moon, sun, planets if needed, huzzah.'
 
@@ -123,7 +134,7 @@ items = [
 		sight = 'Softly glowing in the darkness of the sky, this pale white orb strolls leisurely across the aerial landscape.',
 		),
 
-	SharedThing('@sky',
+	SharedThingContainer('@sky',
 		article = 'the',
 		called = 'sky',
 		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.',
