@@ -10,7 +10,7 @@ __version__ = '0.5.0.0'
 from random import random, randint, choice
 import datetime
 
-from item_model import Actor, Door, Room, SharedThing, Substance, Thing
+from item_model import Actor, Door, Room, SharedThing, Substance, Thing, check_attributes
 from action_model import Behave, Configure, Modify, Sense
 from joker import update_spin
 import can
@@ -47,12 +47,12 @@ class OutsideArea(Room):
 class SharedThingContainer(SharedThing):
 	'Subclass for shared things that hold things.'
 
-    def __init__(self, tag_and_parent, **keywords):
-        check_attributes(tag_and_parent, [], ['allowed', 'parent'], keywords)
-        tag_and_parent = tag_and_parent + ' of @cosmos'
-        keywords['allowed'] = can.have_any_item
-        self.sharedthing = True
-        Thing.__init__(self, tag_and_parent, **keywords)
+	def __init__(self, tag_and_parent, **keywords):
+		check_attributes(tag_and_parent, [], ['allowed', 'parent'], keywords)
+		tag_and_parent = tag_and_parent + ' of @cosmos'
+		keywords['allowed'] = can.have_any_item
+		self.sharedthing = True
+		Thing.__init__(self, tag_and_parent, **keywords)
 
 
 class HeavenlyBody(SharedThing):
@@ -60,11 +60,15 @@ class HeavenlyBody(SharedThing):
 
 	def __init__(self, tag, **keywords):
 		self.alive = False
-		Thing.__init__(self, tag, **keywords)
+		#check_attributes(tag, [], ['exits', 'shared', 'refuses'], keywords) #new
+		#tag_and_parent = tag + ' of @cosmos' #new
+		#keywords['allowed'] = can.have_any_item #new
+		Thing.__init__(self, tag, **keywords) #removing this temporarily
+		#Item.__init__(self, tag_and_parent, 'substance', **keywords) #testing this #removed due to derp
         #put in something with light
 
 
-class Sun(HeavenlyBody):
+class Sun(HeavenlyBody): # was originally a heavenly body
 	'The sun, the only instance of... the sun.'
 
 	def react(self, world, basis):
@@ -125,7 +129,10 @@ items = [
 	Sun('@sun in @sky',
 		article = 'the',
 		called = "sun",
-		sight = "Hard to look at and ever generous in its light giving warmth, the sun sits far out of reach."
+		#consumable = True, # remove me if not a substance
+		#qualities = ['eat', 'sun'], # remove me if not a substance
+		sight = "Hard to look at and ever generous in its light giving warmth, the sun sits far out of reach." # temporarily removed for substance
+		#sight = "bright body" # remove me if not a substance
 		),
 
 	Moon('@moon in @sky',
