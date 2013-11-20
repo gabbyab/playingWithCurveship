@@ -126,7 +126,10 @@ items = [
 	SharedThing('@sky',
 		article = 'the',
 		called = 'sky',
-		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.'
+		sight = 'Covering the vast expanse far above is an air-made sea of varying blues.',
+		open = False,
+		transparent = True,
+		mention = False
 		),
 
 	Tree('@tree in @beach', 
